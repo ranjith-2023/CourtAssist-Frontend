@@ -28,21 +28,6 @@ The user interface for the **Court Assist** platform. This dashboard provides a 
 
 ---
 
-## 📁 Project Structure
-
-```text
-src/
-├── components/       # Reusable UI components (Buttons, Cards, Inputs)
-├── pages/            # Main views (Dashboard, Login, CaseDetails)
-├── services/         # API logic using fetch()
-├── context/          # Auth and Global State management
-├── firebase-messaging-sw.js  # Service Worker for background alerts
-└── App.jsx           # Main Routing logic
-
-```
-
----
-
 ## 🚀 Installation & Setup
 
 ### 1. Clone the repository
