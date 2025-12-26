@@ -1,113 +1,124 @@
-# ⚖️ Court Assist - Frontend (React)
+# 🖥️ Court Assist - Frontend (React)
 
-This is the client-side application for **Court Assist**, a hearing reminder platform designed for advocates and litigants. Built with **React** and **Vite**, it provides a seamless interface for case management and real-time notifications.
+The user interface for the **Court Assist** platform. This dashboard provides a streamlined experience for litigants and advocates to manage their legal cases and configure real-time hearing alerts.
 
----
+## 🛠️ Features
 
-## 🎨 Project Overview
-
-The frontend serves as the command center for users to:
-
-* **Register & Login:** Secure authentication via Firebase/JWT.
-* **Case Dashboard:** View, search, and filter upcoming court hearings.
-* **Notification Management:** Toggle preferences for Email, SMS, and Push alerts.
-* **Real-time Interaction:** Integration with Firebase Cloud Messaging (FCM) for instant background alerts.
-
----
-
-## 🛠️ Tech Stack
-
-* **Framework:** React 18 (Vite)
-* **Styling:** Tailwind CSS / Bootstrap (whichever you are using)
-* **State Management:** Context API / Redux
-* **Notification Handling:** * **EmailJS:** Client-side email triggering.
-* **Firebase SDK:** Push notifications and service worker management.
+* **Case Dashboard:** A clean, grid-based view of all active cases.
+* **User Roles:** Context-aware UI for both **Advocates** (multi-case management) and **Litigants** (personal case tracking).
+* **Real-time Notifications:** * Integrated **Firebase Cloud Messaging** for background push alerts.
+* **EmailJS** integration for direct client-side email dispatch.
 
 
-* **API Client:** Axios (for communication with the Spring Boot backend)
+* **Responsive Design:** Built with **Tailwind CSS** for a mobile-first experience.
+* **Dynamic Forms:** Easy entry for case numbers, court types, and next hearing dates.
 
 ---
 
-## 📂 Folder Structure
+## 🏗️ Tech Stack
+
+* **Framework:** React.js (Vite)
+* **Styling:** Tailwind CSS
+* **API Calls:** Native `fetch` API (No external library bloat)
+* **Notifications:** * Firebase (Push Notifications)
+* EmailJS (Direct Email)
+
+
+* **Icons:** Lucide React / Heroicons
+
+---
+
+## 📁 Project Structure
 
 ```text
-frontend/
-├── public/
-│   └── firebase-messaging-sw.js  # Service worker for background push
-├── src/
-│   ├── assets/                 # Images, icons, and global styles
-│   ├── components/             # Reusable UI components
-│   ├── context/                # Auth and Notification context
-│   ├── hooks/                  # Custom React hooks
-│   ├── services/               # API call logic (Axios)
-│   └── App.jsx                 # Root component
-├── .env                        # Environment variables (Ignored by Git)
-└── package.json
+src/
+├── components/       # Reusable UI components (Buttons, Cards, Inputs)
+├── pages/            # Main views (Dashboard, Login, CaseDetails)
+├── services/         # API logic using fetch()
+├── context/          # Auth and Global State management
+├── firebase-messaging-sw.js  # Service Worker for background alerts
+└── App.jsx           # Main Routing logic
 
 ```
 
 ---
 
-## 🚀 Setup & Installation
+## 🚀 Installation & Setup
 
-### 1. Prerequisites
-
-* Node.js (v18.0.0 or higher)
-* npm or yarn
-
-### 2. Clone and Install
+### 1. Clone the repository
 
 ```bash
 git clone git@github.com:ranjith-2023/CourtAssist-Frontend.git
 cd CourtAssist-Frontend
+
+```
+
+### 2. Install Dependencies
+
+```bash
 npm install
 
 ```
 
-### 3. Environment Configuration
+### 3. Environment Variables
 
-Create a `.env` file in the root directory and add your credentials:
+Create a `.env` file in the root directory and add your keys:
 
 ```env
-VITE_APP_API_KEY=your_firebase_key
-VITE_APP_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_APP_PROJECT_ID=your_project_id
-VITE_APP_MESSAGING_SENDER_ID=your_sender_id
-VITE_APP_APP_ID=your_app_id
-VITE_BACKEND_URL=http://localhost:8080/api/v1
+VITE_APP_API_URL=http://localhost:8080/api
+VITE_APP_FIREBASE_API_KEY=your_key
+VITE_APP_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_APP_FIREBASE_PROJECT_ID=your_id
+VITE_APP_FIREBASE_MESSAGING_SENDER_ID=your_id
+VITE_APP_FIREBASE_APP_ID=your_app_id
+VITE_APP_EMAILJS_SERVICE_ID=your_service_id
+VITE_APP_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_APP_EMAILJS_PUBLIC_KEY=your_public_key
 
 ```
 
-### 4. Running the App
+### 4. Run Development Server
 
 ```bash
-# Start development server
 npm run dev
 
 ```
 
 ---
 
-## 🔔 Notification Setup
+## 🛰️ API Integration
 
-### Background Push Notifications
+The frontend communicates with the Spring Boot backend using the native `fetch` API.
 
-The application uses a Service Worker located at `public/firebase-messaging-sw.js`.
+**Example Fetch Structure:**
 
-> **Note:** For production, ensure that your service worker is registered over HTTPS, as browsers do not allow notification permissions on insecure origins (except localhost).
+```javascript
+const fetchCases = async () => {
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/cases`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return response.json();
+};
 
-### Email Alerts
+```
 
-We use **EmailJS** to handle automated client-side communication. Ensure your `Service ID` and `Template ID` are configured in the dashboard components.
+---
+
+## 🔔 Setting Up Push Notifications
+
+1. Ensure your `firebase-messaging-sw.js` is located in the `public/` folder.
+2. The app will request notification permission on the first dashboard load.
+3. Once granted, the device token is sent to the backend to enable targeted reminders.
 
 ---
 
 ## 🤝 Contributing
 
-1. Fork the project.
-2. Create your Feature Branch (`git checkout -b feature/UI-Improvement`).
-3. Commit your changes (`git commit -m 'Add new dashboard widget'`).
-4. Push to the branch (`git push origin feature/UI-Improvement`).
+1. Fork the Project.
+2. Create your Feature Branch.
+3. Commit your Changes.
+4. Push to the Branch.
 5. Open a Pull Request.
 
 ---
@@ -115,7 +126,5 @@ We use **EmailJS** to handle automated client-side communication. Ensure your `S
 ## 👤 Contact
 
 **Ranjith** - [GitHub](https://www.google.com/search?q=https://github.com/ranjith-2023)
-
-**Project Link:** [Court Assist Frontend](https://www.google.com/search?q=https://github.com/ranjith-2023/CourtAssist-Frontend)
 
 ---
